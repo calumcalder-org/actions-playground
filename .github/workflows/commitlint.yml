@@ -1,7 +1,6 @@
 name: Lint PR Title
 
 on:
-  push:
   pull_request:
    types: [opened, synchronize]
 
