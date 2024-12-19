@@ -1,14 +1,19 @@
-name: Commitlint
+name: Lint PR Title
 
-on: [pull_request]
-
-permissions:
-  contents: read
-  pull-requests: read
+on:
+  push:
+  pull_request:
+   types: [opened, synchronize]
 
 jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: wagoid/commitlint-github-action@v6
+      - uses: actions/setup-go@v5
+      - name: "Install commitlint"
+        run: go install github.com/conventionalcommit/commitlint@latest
+      - name : Lint the PR title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: echo "${TITLE}" | commitlint lint
