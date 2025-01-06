@@ -1,5 +1,8 @@
 name: Tag Release
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -13,7 +16,10 @@ jobs:
         with:
           fetch-tags: true
       - name: "Pull tags"
-        run: git pull --tags
+        run: |
+          git pull --tags
+          git config --global user.name "Release Bot"
+          git config --global user.email "dtp-releasebot@users.noreply.github.com"
       - name: "Install commitizen"
         run: pip install --user -U commitizen
       - name: "Bump version"
