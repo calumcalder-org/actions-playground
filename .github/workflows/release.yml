@@ -1,0 +1,14 @@
+name: Release to Maven
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: "Release"
+    steps:
+      - name: "release"
+        run: echo "Hello world!"
