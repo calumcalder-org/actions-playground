@@ -1,3 +1,9 @@
+## 0.4.0 (2025-01-08)
+
+### Feat
+
+- test publishing to OSSRH
+
 ## 0.3.1 (2025-01-08)
 
 ### Fix
