@@ -39,4 +39,5 @@ jobs:
           GPG_KEY_NAME: "${{ vars.GPG_KEY_NAME }}"
         run: |
           echo "${GPG_KEYRING_B64}" | base64 -d > /tmp/keyring.kbx
+          file /tmp/keyring.kbx
           ./gradlew sign -Psigning.secretKeyRingFile=/tmp/keyring.kbx -Psigning.password="${GPG_KEY_PASSPHRASE}" -Psigning.keyId="${GPG_KEY_NAME}"
