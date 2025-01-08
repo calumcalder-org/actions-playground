@@ -36,5 +36,6 @@ jobs:
         env:
           SIGNING_KEY: "${{ secrets.GPG_KEY_ASCII }}"
           SIGNING_PASSWORD: "${{ secrets.GPG_KEY_PASSPHRASE }}"
+          SIGNING_KEY_ID: "${{ vars.GPG_KEY_NAME }}"
         run: |
-          ./gradlew sign
+          ./gradlew sign -Psigning.keyId="${GPG_KEY_NAME}"
