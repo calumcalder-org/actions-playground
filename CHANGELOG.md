@@ -1,3 +1,13 @@
+## 0.2.2 (2025-01-08)
+
+### Fix
+
+- use env
+- formatting
+- formatting
+- indent (#9)
+- remove empty step (#8)
+
 ## 0.2.1 (2025-01-06)
 
 ### Fix
