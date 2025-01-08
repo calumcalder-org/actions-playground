@@ -33,10 +33,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: "Sign"
-        with:
+        env:
           GPG_KEYRING_B64: "${{ secrets.GPG_KEYRING_B64 }}"
           GPG_KEY_PASSPHRASE: "${{ secrets.GPG_KEY_PASSPHRASE }}"
           GPG_KEY_NAME: "${{ vars.GPG_KEY_NAME }}"
         run: |
-          echo "${INPUTGPG_KEYRING_B64}" | base64 -d > /tmp/keyring.kbx
-          ./gradlew sign -Psigning.secretKeyRingFile=/tmp/keyring.kbx -Psigning.password="${INPUT_GPG_KEY_PASSPHRASE}" -Psigning.keyId="${INPUT_GPG_KEY_NAME}"
+          echo "${GPG_KEYRING_B64}" | base64 -d > /tmp/keyring.kbx
+          ./gradlew sign -Psigning.secretKeyRingFile=/tmp/keyring.kbx -Psigning.password="${GPG_KEY_PASSPHRASE}" -Psigning.keyId="${GPG_KEY_NAME}"
