@@ -24,7 +24,6 @@ jobs:
         uses: commitizen-tools/commitizen-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Init java"
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
