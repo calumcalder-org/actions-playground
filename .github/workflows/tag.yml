@@ -41,9 +41,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: "Sign"
+      - name: Sign
         env:
           SIGNING_KEY: "${{ secrets.GPG_KEY_ASCII }}"
           SIGNING_PASSWORD: "${{ secrets.GPG_KEY_PASSPHRASE }}"
