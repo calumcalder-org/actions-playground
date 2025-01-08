@@ -85,5 +85,8 @@ uploadArchives {
 }
 
 signing {
+  def signingKey = System.getenv('SIGNING_KEY')
+  def signingPassword = findProperty("SIGNING_PASSWORD")
+  useInMemoryPgpKeys(signingKey, signingPassword)
   sign project.configurations.archives
 }
