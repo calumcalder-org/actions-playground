@@ -1,3 +1,9 @@
+## 0.4.2 (2025-02-06)
+
+### Fix
+
+- use correct publisher account (#12)
+
 ## 0.4.1 (2025-02-06)
 
 ### Fix
