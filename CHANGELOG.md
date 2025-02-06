@@ -1,3 +1,9 @@
+## 0.4.1 (2025-02-06)
+
+### Fix
+
+- use function to configure publish (#10)
+
 ## 0.4.0 (2025-01-08)
 
 ### Feat
