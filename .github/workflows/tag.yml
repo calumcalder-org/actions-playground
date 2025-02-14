@@ -27,6 +27,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: false
+          push: true
   release:
     needs: bump_version
     runs-on: ubuntu-latest
