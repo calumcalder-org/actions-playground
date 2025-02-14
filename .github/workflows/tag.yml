@@ -26,8 +26,11 @@ jobs:
         uses: commitizen-tools/commitizen-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          changelog: false
-          push: true
+          push: false
+      - name: Push tags
+        # required because cz action won't push tags only
+        run: |
+          git push origin main --tags
   release:
     needs: bump_version
     runs-on: ubuntu-latest
