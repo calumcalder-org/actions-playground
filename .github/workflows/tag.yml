@@ -67,7 +67,12 @@ jobs:
           name: changelog
           path: ${{ github.workspace }}-CHANGELOG.md
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.md
           tag_name: "v${{ needs.bump_version.outputs.version }}"
+          release_name: "Release v${{ needs.bump_version.outputs.version }}"
+          body_path: ${{ github.workspace }}-CHANGELOG.md
+          draft: false
+          prerelease: false
