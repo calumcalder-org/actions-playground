@@ -1,0 +1,5 @@
+version = System.getenv('RELEASE_VERSION') ? System.getenv("RELEASE_VERSION") : "${projectVersion}"
+
+tasks.register("printVersion") {
+  println project.version
+}
