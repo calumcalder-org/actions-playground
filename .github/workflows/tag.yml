@@ -65,9 +65,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: changelog
-          path: /tmp/changelog.md
+          path: ${{ github.workspace }}-CHANGELOG.md
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: /tmp/changelog.md
+          body_path: ${{ github.workspace }}-CHANGELOG.md
           tag_name: "v${{ needs.bump_version.outputs.version }}"
