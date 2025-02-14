@@ -70,3 +70,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: /tmp/changelog.md
+          tag_name: "v${{ needs.bump_version.outputs.version }}"
