@@ -30,6 +30,12 @@ jobs:
           git tag "v${VERSION}"
           git push origin "v${VERSION}" --tags
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          cz changelog "v${VERSION}" --file-name /tmp/changelog.md
+      - name: Upload changelog
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: /tmp/changelog.md
   release:
     needs: bump_version
     runs-on: ubuntu-latest
@@ -55,3 +61,12 @@ jobs:
           RELEASE_VERSION: "v${{ needs.bump_version.outputs.version }}"
         run: |
           ./gradlew printVersion # sign uploadArchives
+      - name: Download changelog
+        uses: actions/download-artifact@v4
+        with:
+          name: changelog
+          path: /tmp/changelog.md
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: /tmp/changelog.md
