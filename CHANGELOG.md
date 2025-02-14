@@ -1,3 +1,12 @@
+## 0.4.3 (2025-02-14)
+
+### Fix
+
+- commit but don't changelog (#16)
+- push but don't commit (#15)
+- use version variable correctly (#14)
+- publish from CI without commits (#13)
+
 ## 0.4.2 (2025-02-06)
 
 ### Fix
