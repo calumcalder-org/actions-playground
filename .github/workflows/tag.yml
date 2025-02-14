@@ -54,6 +54,6 @@ jobs:
           SIGNING_KEY_ID: "${{ vars.GPG_KEY_NAME }}"
           OSSRH_USERNAME: "${{ secrets.OSSRH_USERNAME }}"
           OSSRH_PASSWORD: "${{ secrets.OSSRH_PASSWORD }}"
-          RELEASE_VERSION: "${{ version.outputs.version }}"
+          RELEASE_VERSION: "${{ steps.version.outputs.version }}"
         run: |
           ./gradlew printVersion # sign uploadArchives
