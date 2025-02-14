@@ -22,14 +22,17 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: cz
-        name: Create tag
+        name: Calculate tag
         uses: commitizen-tools/commitizen-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog: false
+          commit: false
           push: false
-      - name: Push tags
+      - name: Push tag
         # required because cz action won't push tags only
         run: |
+          git tag "${{ steps.cz.outputs.version }}"
           git push origin main --tags
   release:
     needs: bump_version
