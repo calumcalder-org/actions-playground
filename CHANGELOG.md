@@ -112,3 +112,46 @@
 - sample PR 1 (#1)
 - make commitlint read the PR title
 - add commitlint
+
+## v0.1.0 (2025-02-14)
+
+### Feat
+
+- test publishing to OSSRH
+- split bump
+- add foo (#5)
+- bump version on commit (#3)
+- sample PR 1 (#1)
+- make commitlint read the PR title
+- add commitlint
+
+### Fix
+
+- manually push (#18)
+- commit but don't changelog for real this time (#17)
+- commit but don't changelog (#16)
+- push but don't commit (#15)
+- use version variable correctly (#14)
+- publish from CI without commits (#13)
+- use correct publisher account (#12)
+- use function to configure publish (#10)
+- simplify release
+- runs-on
+- gpg
+- use inmemory
+- debug
+- use env
+- formatting
+- formatting
+- indent (#9)
+- remove empty step (#8)
+- use correct tag format (#6)
+- changlog typo
+- use action template
+- use action
+- set name
+- pull tags
+- print tags
+- use checkout v4
+- fetch tags (#4)
+- migrate to commitizen (#2)
