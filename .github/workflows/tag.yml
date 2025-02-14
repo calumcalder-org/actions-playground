@@ -14,26 +14,22 @@ jobs:
     runs-on: ubuntu-latest
     name: "Bump version"
     outputs:
-      version: ${{ steps.cz.outputs.version }}
+      version: ${{ steps.tag.outputs.version }}
     steps:
       - name: Check out
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      - id: cz
-        name: Calculate tag
-        uses: commitizen-tools/commitizen-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          changelog: false
-          commit: false
-          push: false
-      - name: Push tag
-        # required because cz action won't push tags only
+      - name: Install commitizen
+        run: pip install --user -U commitizen
+      - id: tag
+        name: Create tag
         run: |
-          git tag "${{ steps.cz.outputs.version }}"
-          git push origin main --tags
+          VERSION=$(cz bump --get-next)
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}" --tags
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
   release:
     needs: bump_version
     runs-on: ubuntu-latest
@@ -42,12 +38,7 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4
         with:
-          ref: ${{ needs.bump_version.outputs.version }}
-      - name: "Extract version number from tag"
-        id: version
-        env:
-          VERSION: "${{ needs.bump_version.outputs.version }}"
-        run: echo "version=${VERSION:1}" | tee $GITHUB_OUTPUT
+          ref: "v${{ needs.bump_version.outputs.version }}"
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
@@ -61,6 +52,6 @@ jobs:
           SIGNING_KEY_ID: "${{ vars.GPG_KEY_NAME }}"
           OSSRH_USERNAME: "${{ secrets.OSSRH_USERNAME }}"
           OSSRH_PASSWORD: "${{ secrets.OSSRH_PASSWORD }}"
-          RELEASE_VERSION: "${{ steps.version.outputs.version }}"
+          RELEASE_VERSION: "v${{ needs.bump_version.outputs.version }}"
         run: |
           ./gradlew printVersion # sign uploadArchives
