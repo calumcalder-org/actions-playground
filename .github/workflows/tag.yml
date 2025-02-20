@@ -30,12 +30,17 @@ jobs:
           git tag "v${VERSION}"
           git push origin "v${VERSION}" --tags
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          cz changelog "v${VERSION}" --file-name /tmp/changelog.md
-      - name: Upload changelog
-        uses: actions/upload-artifact@v4
+          cz changelog "v${VERSION}" --file-name ${{ github.workspace }}/CHANGELOG.md
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: changelog
-          path: /tmp/changelog.md
+          tag_name: "v${{ steps.tag.outputs.version }}"
+          release_name: "Release v${{ steps.tag.outputs.version }}"
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          draft: false
+          prerelease: false
   release:
     needs: bump_version
     runs-on: ubuntu-latest
@@ -61,18 +66,3 @@ jobs:
           RELEASE_VERSION: "v${{ needs.bump_version.outputs.version }}"
         run: |
           ./gradlew printVersion # sign uploadArchives
-      - name: Download changelog
-        uses: actions/download-artifact@v4
-        with:
-          name: changelog
-          path: ${{ github.workspace }}-CHANGELOG
-      - name: Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: "v${{ needs.bump_version.outputs.version }}"
-          release_name: "Release v${{ needs.bump_version.outputs.version }}"
-          body_path: ${{ github.workspace }}-CHANGELOG/changelog.md
-          draft: false
-          prerelease: false
